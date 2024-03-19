@@ -3,6 +3,7 @@
 ### Team Members
 1. Ryan Mroczenski
 2. Dane Bach
+3. Nicholas Sapp
 
 ### Outline 
 1. We aim to map weather events throughout the United States over a period of time, most likely the past 20 years. We will use data from NOAA to map the paths of tornados and include other information such as damage, magnitude, length, and cost. We will also include other graphics such as descriptions, charts, and other supporting information. 
