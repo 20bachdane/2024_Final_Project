@@ -10,8 +10,9 @@
 
 ### Proposal
 1. Persona/ Scenario 
-    1. Persona 
-    The target user is a person working in a weather related fields such as meteorologist, scientists, storm chasers, and other interested parties. People included in this list may want to learn more about past weather events and patterns to help them predict future ones. 
+    Target User Profile (Persona): Name & Position: Ben Jensen, National Weather Service Meteorologist Background Description: Ben Jensen is a dedicated meteorologist at the National Weather Service (NWS), with a specialized focus on monitoring and analyzing tornado activity across the United States. Given the critical nature of his work in forecasting, understanding, and mitigating the impacts of tornadoes, Ben is deeply involved in the study and management of comprehensive tornado data collected by the NWS. This dataset, extending back to 1950, encompasses various parameters such as wind speed, path length and width, total damage in USD, fatalities, injuries, and more, aiming to categorize and understand the intensity and impact of past tornadoes. However, Ben faces challenges in visualizing and comparing this extensive data effectively. The current system lacks the capability for intuitive data exploration, making it difficult to compare tornado events directly or filter them by specific criteria such as year, location, severity, or other key variables.
+    
+    The primary objective is to enhance the NWS’s capability to analyze tornado events through better data analysis and visualization tools. He is looking for a solution that allows for easy comparison of tornado events side by side, including the ability to filter and sort by various criteria like date range, geographic location, tornado intensity, and impact metrics such as damage and casualties. This will enable a more nuanced understanding of tornado patterns, seasonal variations, and potential trends over time, which is crucial for improving forecasting accuracy and public safety measures.
 
 User Scenarios 
 
