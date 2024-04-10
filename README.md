@@ -16,36 +16,36 @@
 
 2. User Scenarios 
 
-Scenario #1:  
+    Scenario #1:  
 
-The user is tasked with determining where to allocate public safety resources for future tornadoes. To do this, they want to examine the severity and injuries. The user arrives at the interactive and wants to use data from the last five years, so they set the years to include the last five on the slider. From the dropdown menu, the user selects to compare by magnitude. They opt to deselect EF0 because they are not interested in tornadoes that cause minor damage, as well as EF5 their rarity, considering them outliers. The user proceeds to filter through the magnitude scale, deselecting options as they identify where the most severe tornadoes occur. The interactive gives them the idea of where most severe tornadoes take place and their path. Next, the user wants to see the magnitude and location/ paths that result in the most injuries. The user selects injuries from the dropdown menu and compares the paths of the ones that result in the greatest injuries based on the legend, indicating the scale.  
+        The user is tasked with determining where to allocate public safety resources for future tornadoes. To do this, they want to examine the severity and injuries. The user arrives at the interactive and wants to use data from the last five years, so they set the years to include the last five on the slider. From the dropdown menu, the user selects to compare by magnitude. They opt to deselect EF0 because they are not interested in tornadoes that cause minor damage, as well as EF5 their rarity, considering them outliers. The user proceeds to filter through the magnitude scale, deselecting options as they identify where the most severe tornadoes occur. The interactive gives them the idea of where most severe tornadoes take place and their path. Next, the user wants to see the magnitude and location/ paths that result in the most injuries. The user selects injuries from the dropdown menu and compares the paths of the ones that result in the greatest injuries based on the legend, indicating the scale.  
 
-Scenario #2 
+    Scenario #2 
 
-An employee with the National Weather Service is tasked with finding out when tornadoes are the most common to aid in preparedness. The user arrives at the interactive and sees the graph on the page that shows the number of tornadoes each month based on the years that were prepopulated. The user decides to look at data for the past twenty years, so they adjust the year scale bar to show the past twenty. The user then looks at the graph to compare the number of tornadoes that occur each month. The user then identifies the month in which the most tornadoes occur.  
+        An employee with the National Weather Service is tasked with finding out when tornadoes are the most common to aid in preparedness. The user arrives at the interactive and sees the graph on the page that shows the number of tornadoes each month based on the years that were prepopulated. The user decides to look at data for the past twenty years, so they adjust the year scale bar to show the past twenty. The user then looks at the graph to compare the number of tornadoes that occur each month. The user then identifies the month in which the most tornadoes occur.  
 
-Scenario #3 
+    Scenario #3 
 
-A user recalls a tornado that went through his hometown as a child and wants to “find it” and learn more about it. The user knows that exact year it took place, 2015, but not much else, so they set the year's scale to only include that year. Next, they zoom into their hometown to see all the tornadoes and their paths that occurred that year. The user recalls that one person died so they select the dropdown and filter by fatalities. They compare the colors on the legend to colors on the map and find the path that resulted in one fatality. The user identifies the path of the specific tornado they recalled as a child and clicks its path on the map. The user is then presented with a pop-up that provides all the details relating to the tornado. 
+        A user recalls a tornado that went through his hometown as a child and wants to “find it” and learn more about it. The user knows that exact year it took place, 2015, but not much else, so they set the year's scale to only include that year. Next, they zoom into their hometown to see all the tornadoes and their paths that occurred that year. The user recalls that one person died so they select the dropdown and filter by fatalities. They compare the colors on the legend to colors on the map and find the path that resulted in one fatality. The user identifies the path of the specific tornado they recalled as a child and clicks its path on the map. The user is then presented with a pop-up that provides all the details relating to the tornado. 
 
 3. Required Document 
 
-Representation:
+    Representation:
 
-Basemap: (dark) natural earth or street map layer 
-Tornado Paths: depicted by lines from start location to end location  
-Legend: visual description of presented data 
-Tornadoes per Month: bar chart  
+        Basemap: (dark) natural earth or street map layer 
+        Tornado Paths: depicted by lines from start location to end location  
+        Legend: visual description of presented data 
+        Tornadoes per Month: bar chart  
 
-Interaction:  
+    Interaction:  
 
-Query Panel: filter by date  
-Dropdown panel: filter by magnitude, # of injuries, # of fatalities  
-Legend Toggle: overlay: turn on/off certain data  
-Timeline: sequence by year  
-Path Hover: retrieve information on specific tornado  
-Chart Hover: retrieve: hover over bar chart to get values  
-Reexpress: cyclical time  
+        Query Panel: filter by date  
+        Dropdown panel: filter by magnitude, # of injuries, # of fatalities  
+        Legend Toggle: overlay: turn on/off certain data  
+        Timeline: sequence by year  
+        Path Hover: retrieve information on specific tornado  
+        Chart Hover: retrieve: hover over bar chart to get values  
+        Reexpress: cyclical time  
 
 
 
