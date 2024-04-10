@@ -47,6 +47,8 @@
     Chart Hover: retrieve: hover over bar chart to get values  
     Reexpress: cyclical time  
 
+    ![Final Project Image](img/IMG_0264.jpeg)
+
 
 
 
