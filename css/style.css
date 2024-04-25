@@ -1,6 +1,19 @@
 /*insert style here*/
+.container {
+    max-width: 1200px; /* Adjust as needed */
+    margin: 0 auto; /* Center the container */
+    padding: 20px; /* Add some padding around the container */
+    text-align: center; /* Center the text inside the container */
+}
+
 #map {
-	height: 800px;
-	width: 100%;
-	display: inline-block;
+    height: 600px;
+    width: 80%;
+	margin-left: auto; /* Align the map to the right */
+    margin-right: 0; /* Align the map to the right */
+    float: right;
+}
+
+h1 {
+    margin-top: 0; /* Remove default margin to move the title up */
 }
