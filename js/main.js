@@ -13,32 +13,23 @@ function createMap() {
     });
 
      // Define tile layers
-    var stamenLayer = L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png', {
-        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>',
-
+     var worldLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
     });
      var osmLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> | Data source: <a href="https://data.worldbank.org/indicator/GC.DOD.TOTL.GD.ZS">World Bank</a>'
     });
-    var worldLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-    });
-    var Stadia_AlidadeSatellite = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.{ext}', {
 
-        attribution: '&copy; CNES, Distribution Airbus DS, © Airbus DS, © PlanetObserver (Contains Copernicus Data) | &copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        ext: 'jpg'
-    });
+   
 
 
     // Add default tile layer (OSM)
-    stamenLayer.addTo(map);
+    worldLayer.addTo(map);
 
     // Add layer control to toggle between layers
     var baseLayers = {
-        "Stamen Terrain": stamenLayer,
-        "OpenStreetMap": osmLayer,
         "World Imagery": worldLayer,
-        "Satellite": Stadia_AlidadeSatellite,
+        "OpenStreetMap": osmLayer
         
     };
 
