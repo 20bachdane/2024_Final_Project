@@ -42,22 +42,28 @@ function createMap() {
 }
 
 function createYearInput(controlDiv) {
-    var minYearLabel = document.createElement('label');
-    minYearLabel.textContent = 'Select Minimum Year:';
-    controlDiv.appendChild(minYearLabel);
+    // Label for the year filter
+    var yearFilterLabel = document.createElement('label');
+    yearFilterLabel.textContent = 'Filter by year:';
+    yearFilterLabel.style.fontWeight = 'bold';
+    controlDiv.appendChild(yearFilterLabel);
 
+    // Select for the minimum year
     var minYearSelect = document.createElement('select');
     minYearSelect.id = 'minYearSelect';
     controlDiv.appendChild(minYearSelect);
 
-    var maxYearLabel = document.createElement('label');
-    maxYearLabel.textContent = 'Select Maximum Year:';
-    controlDiv.appendChild(maxYearLabel);
+    // "To" between the dropdowns
+    var toLabel = document.createElement('span');
+    toLabel.textContent = ' to ';
+    controlDiv.appendChild(toLabel);
 
+    // Select for the maximum year
     var maxYearSelect = document.createElement('select');
     maxYearSelect.id = 'maxYearSelect';
     controlDiv.appendChild(maxYearSelect);
 
+    // Populate both year selects
     for (let i = 1950; i <= 2022; i++) {
         let minOption = document.createElement('option');
         minOption.value = i;
@@ -69,35 +75,48 @@ function createYearInput(controlDiv) {
         maxOption.textContent = i;
         maxYearSelect.appendChild(maxOption);
     }
+    minYearSelect.value = 2020;
+    // Set a default value for the maximum year to the latest year
+    maxYearSelect.value = 2022;
 
-    minYearSelect.value = 2020;  // Set a default value for the minimum year
-    maxYearSelect.value = 2022;  // Set a default value for the maximum year
+    // Event listeners for changes
+    minYearSelect.addEventListener('change', function() {
+        loadCSVData(); // Reload CSV and update map based on the new year selection
+    });
 
-    minYearSelect.addEventListener('change', loadCSVData);
-    maxYearSelect.addEventListener('change', loadCSVData);
+    maxYearSelect.addEventListener('change', function() {
+        loadCSVData(); // Reload CSV and update map based on the new year selection
+    });
 }
 
-function createMonthDropdown(controlDiv) {
-    var minMonthLabel = document.createElement('label');
-    minMonthLabel.textContent = 'Select Minimum Month:';
-    controlDiv.appendChild(minMonthLabel);
 
+function createMonthDropdown(controlDiv) {
+    // Label for the month filter
+    var monthFilterLabel = document.createElement('label');
+    monthFilterLabel.textContent = 'Filter by month:';
+    monthFilterLabel.style.fontWeight = 'bold';
+    controlDiv.appendChild(monthFilterLabel);
+
+    // Select for the minimum month
     var minMonthSelect = document.createElement('select');
     minMonthSelect.id = 'minMonthSelect';
     controlDiv.appendChild(minMonthSelect);
 
-    var maxMonthLabel = document.createElement('label');
-    maxMonthLabel.textContent = 'Select Maximum Month:';
-    controlDiv.appendChild(maxMonthLabel);
+    // "To" between the dropdowns
+    var toLabel = document.createElement('span');
+    toLabel.textContent = ' to ';
+    controlDiv.appendChild(toLabel);
 
+    // Select for the maximum month
     var maxMonthSelect = document.createElement('select');
     maxMonthSelect.id = 'maxMonthSelect';
     controlDiv.appendChild(maxMonthSelect);
 
+    // Populate both month selects
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    months.forEach((month, index) => {
+    months.forEach(function(month, index) {
         let minOption = document.createElement('option');
-        minOption.value = index + 1;  // Months are 1-indexed
+        minOption.value = index + 1;  // Assuming the "mo" column is 1-indexed
         minOption.textContent = month;
         minMonthSelect.appendChild(minOption);
 
@@ -107,13 +126,18 @@ function createMonthDropdown(controlDiv) {
         maxMonthSelect.appendChild(maxOption);
     });
 
-    minMonthSelect.value = 1;  // Set a default value for the minimum month
-    maxMonthSelect.value = 12;  // Set a default value for the maximum month
+    // Set a default value for the maximum month to the last month
+    maxMonthSelect.value = 12;
 
-    minMonthSelect.addEventListener('change', loadCSVData);
-    maxMonthSelect.addEventListener('change', loadCSVData);
+    // Event listeners for changes
+    minMonthSelect.addEventListener('change', function() {
+        loadCSVData(); // Reload CSV and update map based on the new month selection
+    });
+
+    maxMonthSelect.addEventListener('change', function() {
+        loadCSVData(); // Reload CSV and update map based on the new month selection
+    });
 }
-
 function createColorBlindModeCheckbox(controlDiv) {
     var label = document.createElement('label');
     var checkbox = document.createElement('input');
