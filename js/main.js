@@ -43,7 +43,124 @@ function createMap() {
     };
 
     L.control.layers(baseLayers).addTo(map);
-}    
+
+    var controlDiv = document.getElementById('controls');
+    if (!controlDiv) {
+        controlDiv = document.createElement('div');
+        controlDiv.id = 'controls';
+        document.body.appendChild(controlDiv); // Append controls to the body or a specific container
+    }
+
+    // Year range setup
+    createYearInput(controlDiv);
+    // Month selection dropdown setup
+    createMonthDropdown(controlDiv);
+
+    loadCSVData();
+}
+
+function createYearInput(controlDiv) {
+    // Label for the minimum year select
+    var minYearLabel = document.createElement('label');
+    minYearLabel.setAttribute('for', 'minYearSelect');
+    minYearLabel.textContent = 'Select Minimum Year:';
+    controlDiv.appendChild(minYearLabel);
+
+    // Select for the minimum year
+    var minYearSelect = document.createElement('select');
+    minYearSelect.id = 'minYearSelect';
+    controlDiv.appendChild(minYearSelect);
+
+    // Label for the maximum year select
+    var maxYearLabel = document.createElement('label');
+    maxYearLabel.setAttribute('for', 'maxYearSelect');
+    maxYearLabel.textContent = 'Select Maximum Year:';
+    controlDiv.appendChild(maxYearLabel);
+
+    // Select for the maximum year
+    var maxYearSelect = document.createElement('select');
+    maxYearSelect.id = 'maxYearSelect';
+    controlDiv.appendChild(maxYearSelect);
+
+    // Populate both year selects
+    for (let i = 1950; i <= 2022; i++) {
+        let minOption = document.createElement('option');
+        minOption.value = i;
+        minOption.textContent = i;
+        minYearSelect.appendChild(minOption);
+
+        let maxOption = document.createElement('option');
+        maxOption.value = i;
+        maxOption.textContent = i;
+        maxYearSelect.appendChild(maxOption);
+    }
+    minYearSelect.value = 2020
+    // Set a default value for the maximum year to the latest year
+    maxYearSelect.value = 2022;
+
+    // Event listeners for changes
+    minYearSelect.addEventListener('change', function() {
+        loadCSVData(); // Reload CSV and update map based on the new year selection
+    });
+
+    maxYearSelect.addEventListener('change', function() {
+        loadCSVData(); // Reload CSV and update map based on the new year selection
+    });
+}
+
+function createMonthDropdown(controlDiv) {
+    // Label for the minimum month select
+    var minMonthLabel = document.createElement('label');
+    minMonthLabel.setAttribute('for', 'minMonthSelect');
+    minMonthLabel.textContent = 'Select Minimum Month:';
+    controlDiv.appendChild(minMonthLabel);
+
+    // Select for the minimum month
+    var minMonthSelect = document.createElement('select');
+    minMonthSelect.id = 'minMonthSelect';
+    controlDiv.appendChild(minMonthSelect);
+
+    // Label for the maximum month select
+    var maxMonthLabel = document.createElement('label');
+    maxMonthLabel.setAttribute('for', 'maxMonthSelect');
+    maxMonthLabel.textContent = 'Select Maximum Month:';
+    controlDiv.appendChild(maxMonthLabel);
+
+    // Select for the maximum month
+    var maxMonthSelect = document.createElement('select');
+    maxMonthSelect.id = 'maxMonthSelect';
+    controlDiv.appendChild(maxMonthSelect);
+
+    // Populate both month selects
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    months.forEach(function(month, index) {
+        let minOption = document.createElement('option');
+        minOption.value = index + 1;  // Assuming the "mo" column is 1-indexed
+        minOption.textContent = month;
+        minMonthSelect.appendChild(minOption);
+
+        let maxOption = document.createElement('option');
+        maxOption.value = index + 1;
+        maxOption.textContent = month;
+        maxMonthSelect.appendChild(maxOption);
+    });
+
+    // Set a default value for the maximum month to the last month
+    maxMonthSelect.value = 12;
+
+    // Event listeners for changes
+    minMonthSelect.addEventListener('change', function() {
+        loadCSVData(); // Reload CSV and update map based on the new month selection
+    });
+
+    maxMonthSelect.addEventListener('change', function() {
+        loadCSVData(); // Reload CSV and update map based on the new month selection
+    });
+}
+
+function updateYearRangeLabel(minYear, maxYear) {
+    document.getElementById('yearRangeLabel').textContent = `${minYear} - ${maxYear}`;
+}
     // Function to handle parsing CSV data
     function parseCSVData(csvData) {
         var parsedData = Papa.parse(csvData, {
@@ -63,7 +180,30 @@ function createMap() {
                 [dataRow.slat, dataRow.slon],
                 [dataRow.elat, dataRow.elon]
             ];
-            return L.polyline(latlngs, { color: 'red' });
+            var polyline = L.polyline(latlngs, { color: 'red' });
+     
+            var popupContent = `
+                <strong>Date:</strong> ${dataRow.date}<br>
+                <strong>Magnitude:</strong> ${dataRow.mag}<br>
+                <strong>Injuries:</strong> ${dataRow.inj}<br>
+                <strong>Fatalities:</strong> ${dataRow.fat}<br>
+                <strong>Length:</strong> ${dataRow.len} miles<br>
+                <strong>Width:</strong> ${dataRow.wid} feet
+            `;
+           
+            polyline.bindPopup(popupContent, {
+                closeButton: false,
+                offset: L.point(0, -20)
+            });
+     
+            polyline.on('mouseover', function(e) {
+                this.openPopup();
+            });
+            polyline.on('mouseout', function(e) {
+                this.closePopup();
+            });
+            return polyline;
+
         } else {
             // If no end coordinates, return null
             return null;
@@ -71,31 +211,50 @@ function createMap() {
     }
 
 // Function to load and process the CSV data
+var allPolylines = []; // Store all polyline layers for later manipulation
+
 function loadCSVData() {
-    fetch('data/1950-2022_torn.csv')
-        .then(response => response.text())
-        .then(csvText => {
-            // Split the CSV text by new line and take the first 101 lines (including header)
-            var lines = csvText.split('\n').slice(0, 101);
-            // Join the selected lines back into a single string
-            var firstHundredLines = lines.join('\n');
-            // Parse the CSV string
-            var data = Papa.parse(firstHundredLines, {
-                header: true,
-                dynamicTyping: true,
-                skipEmptyLines: true
-            }).data;
-            
-            // Process the data
-            data.forEach(function(dataRow) {
-                var polyline = createPolyline(dataRow);
-                if (polyline) {
-                    polyline.addTo(map); // Add the polyline to the map
-                }
-            });
-        })
-        .catch(error => console.error("Error loading CSV data:", error));
+    var minYear = document.getElementById('minYearSelect') ? parseInt(document.getElementById('minYearSelect').value) : 2020;
+    var maxYear = document.getElementById('maxYearSelect') ? parseInt(document.getElementById('maxYearSelect').value) : 2022;
+    var minMonth = document.getElementById('minMonthSelect') ? parseInt(document.getElementById('minMonthSelect').value) : 1;
+    var maxMonth = document.getElementById('maxMonthSelect') ? parseInt(document.getElementById('maxMonthSelect').value) : 12;
+
+    fetch('data/1950-2022_torn.csv').then(response => response.text()).then(csvText => {
+        var data = Papa.parse(csvText, {
+            header: true,
+            dynamicTyping: true,
+            skipEmptyLines: true
+        }).data;
+        updateMap(data, minYear, maxYear, minMonth, maxMonth);
+    }).catch(error => {
+        console.error("Error loading CSV data:", error);
+    });
 }
+
+function updateMap(data) {
+    clearMap();
+    var minYear = parseInt(document.getElementById('minYearSelect').value);
+    var maxYear = parseInt(document.getElementById('maxYearSelect').value);
+    var minMonth = parseInt(document.getElementById('minMonthSelect').value);
+    var maxMonth = parseInt(document.getElementById('maxMonthSelect').value);
+
+    data.filter(row => row.yr >= minYear && row.yr <= maxYear && row.mo >= minMonth && row.mo <= maxMonth)
+        .forEach(function(dataRow) {
+            var polyline = createPolyline(dataRow);
+            if (polyline) {
+                polyline.addTo(map);
+                allPolylines.push(polyline);
+            }
+        });
+}
+
+function clearMap() {
+    allPolylines.forEach(polyline => {
+        map.removeLayer(polyline);
+    });
+    allPolylines = [];
+}
+
 
 
     // Call the function to load and process CSV data
