@@ -18,3 +18,14 @@ h1 {
     margin-top: 0; /* Remove default margin to move the title up */
     font-family: 'Times New Roman', Times, serif;
 }
+
+.sidebar-container {
+    width: 20%; /* Adjust the width as needed */
+    float: left; /* Float the container to the left */
+    padding: 20px; /* Add padding */
+    box-sizing: border-box; /* Include padding in the width */
+}
+
+.filter-container {
+    margin-bottom: 20px; /* Add space between filter containers */
+}
