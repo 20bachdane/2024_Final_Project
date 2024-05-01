@@ -42,26 +42,30 @@ function createMap() {
 }
 
 function createYearInput(controlDiv) {
+    // Create a container div for year filter
+    var yearFilterDiv = document.createElement('div');
+    yearFilterDiv.className = 'filter-container'; // You can add a class for styling if needed
+
     // Label for the year filter
     var yearFilterLabel = document.createElement('label');
     yearFilterLabel.textContent = 'Filter by year:';
     yearFilterLabel.style.fontWeight = 'bold';
-    controlDiv.appendChild(yearFilterLabel);
+    yearFilterDiv.appendChild(yearFilterLabel);
 
     // Select for the minimum year
     var minYearSelect = document.createElement('select');
     minYearSelect.id = 'minYearSelect';
-    controlDiv.appendChild(minYearSelect);
+    yearFilterDiv.appendChild(minYearSelect);
 
     // "To" between the dropdowns
     var toLabel = document.createElement('span');
     toLabel.textContent = ' to ';
-    controlDiv.appendChild(toLabel);
+    yearFilterDiv.appendChild(toLabel);
 
     // Select for the maximum year
     var maxYearSelect = document.createElement('select');
     maxYearSelect.id = 'maxYearSelect';
-    controlDiv.appendChild(maxYearSelect);
+    yearFilterDiv.appendChild(maxYearSelect);
 
     // Populate both year selects
     for (let i = 1950; i <= 2022; i++) {
@@ -87,30 +91,37 @@ function createYearInput(controlDiv) {
     maxYearSelect.addEventListener('change', function() {
         loadCSVData(); // Reload CSV and update map based on the new year selection
     });
+
+    // Append the year filter container to the controlDiv
+    controlDiv.appendChild(yearFilterDiv);
 }
 
 
 function createMonthDropdown(controlDiv) {
+    // Create a container div for month filter
+    var monthFilterDiv = document.createElement('div');
+    monthFilterDiv.className = 'filter-container'; // You can add a class for styling if needed
+
     // Label for the month filter
     var monthFilterLabel = document.createElement('label');
     monthFilterLabel.textContent = 'Filter by month:';
     monthFilterLabel.style.fontWeight = 'bold';
-    controlDiv.appendChild(monthFilterLabel);
+    monthFilterDiv.appendChild(monthFilterLabel);
 
     // Select for the minimum month
     var minMonthSelect = document.createElement('select');
     minMonthSelect.id = 'minMonthSelect';
-    controlDiv.appendChild(minMonthSelect);
+    monthFilterDiv.appendChild(minMonthSelect);
 
     // "To" between the dropdowns
     var toLabel = document.createElement('span');
     toLabel.textContent = ' to ';
-    controlDiv.appendChild(toLabel);
+    monthFilterDiv.appendChild(toLabel);
 
     // Select for the maximum month
     var maxMonthSelect = document.createElement('select');
     maxMonthSelect.id = 'maxMonthSelect';
-    controlDiv.appendChild(maxMonthSelect);
+    monthFilterDiv.appendChild(maxMonthSelect);
 
     // Populate both month selects
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -137,8 +148,16 @@ function createMonthDropdown(controlDiv) {
     maxMonthSelect.addEventListener('change', function() {
         loadCSVData(); // Reload CSV and update map based on the new month selection
     });
+
+    // Append the month filter container to the controlDiv
+    controlDiv.appendChild(monthFilterDiv);
 }
+
 function createColorBlindModeCheckbox(controlDiv) {
+    // Create a container div for color blind mode
+    var colorBlindModeDiv = document.createElement('div');
+    colorBlindModeDiv.className = 'filter-container'; // You can add a class for styling if needed
+
     var label = document.createElement('label');
     var checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -147,8 +166,12 @@ function createColorBlindModeCheckbox(controlDiv) {
 
     label.appendChild(checkbox);
     label.appendChild(document.createTextNode(' Color Blind Mode'));
-    controlDiv.appendChild(label);
+    colorBlindModeDiv.appendChild(label);
+
+    // Append the color blind mode container to the controlDiv
+    controlDiv.appendChild(colorBlindModeDiv);
 }
+
 
 var allPolylines = []; // Store all polyline layers for easy management and clearing
 
