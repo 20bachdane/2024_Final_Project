@@ -253,22 +253,22 @@ function createPolyline(dataRow, isColorBlindMode) {
 function getColorBasedOnMagnitude(magnitude, isColorBlindMode) {
     if (isColorBlindMode) {
         switch (magnitude) {
-            case 0: return '#05509E';   // Yellow
-            case 1: return '#F2D734';     // Blue
-            case 2: return '#D5D5EA';     // Teal
-            case 3: return '#FFF5CC';     // Pink
-            case 4: return '#8E7F30';   // Orange
-            case 5: return '#6787C5';   // Purple
-            default: return 'gray';    // Gray for unexpected values
+            case 0: return '#05509E'; // Dark Blue
+            case 1: return '#F2D734'; // Dark Yellow
+            case 2: return '#D5D5EA'; // Off White
+            case 3: return '#FFF5CC'; // Tan
+            case 4: return '#8E7F30'; // Dark Green
+            case 5: return '#6787C5'; // Light Blue
+            default: return 'gray';   // Gray for unexpected values
         }
     } else {
         switch (magnitude) {
-            case 0: return '#2F00FF';
-            case 1: return '#17F939'; // Bright green
-            case 2: return '#28EEF9';
-            case 3: return '#F2FF00';
-            case 4: return '#FF0000';
-            case 5: return '#FF1EFC';
+            case 0: return '#2F00FF'; // Bright Blue
+            case 1: return '#17F939'; // Bright Green
+            case 2: return '#28EEF9'; // Teal
+            case 3: return '#F2FF00'; // Yellow
+            case 4: return '#FF0000'; // Red
+            case 5: return '#FF1EFC'; // Purple
             default: return 'gray';
         }
     }
