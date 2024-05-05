@@ -32,11 +32,24 @@ function createMap() {
 
     var controlDiv = document.createElement('div');
     controlDiv.id = 'controls';
+    controlDiv.style.display = 'flex';
+    controlDiv.style.flexDirection = 'column';
+    controlDiv.style.position = 'absolute';
+    controlDiv.style.left = '20px'; // Adjust position to the left
+    controlDiv.style.top = '10px';
+    controlDiv.style.zIndex = '1000'; // Ensure controls are above the map
     document.body.appendChild(controlDiv); // Append controls to the body or a specific container
 
     createYearInput(controlDiv);
     createMonthDropdown(controlDiv);
     createColorBlindModeCheckbox(controlDiv);
+
+    // Create and add legend to the controlDiv
+    var legendDiv = document.createElement('div');
+    legendDiv.id = 'legend';
+    legendDiv.style.marginTop = '10px'; // Add some spacing above the legend
+    updateLegend(legendDiv, false); // Initialize with default legend
+    controlDiv.appendChild(legendDiv);
 
     loadCSVData();
 }
@@ -162,7 +175,10 @@ function createColorBlindModeCheckbox(controlDiv) {
     var checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.id = 'colorBlindModeCheckbox';
-    checkbox.addEventListener('change', loadCSVData); // Re-load data when the mode is toggled
+    checkbox.addEventListener('change', function() {
+        loadCSVData(); // Re-load data when the mode is toggled
+        updateLegend(document.getElementById('legend'), checkbox.checked); // Update the legend
+    });
 
     label.appendChild(checkbox);
     label.appendChild(document.createTextNode(' Color Blind Mode'));
@@ -272,4 +288,13 @@ function getColorBasedOnMagnitude(magnitude, isColorBlindMode) {
             default: return 'gray';
         }
     }
+}
+
+function updateLegend(legendDiv, isColorBlindMode) {
+    legendDiv.innerHTML = '<h4>Magnitude</h4>';
+    var magnitudes = [0, 1, 2, 3, 4, 5];
+    magnitudes.forEach(function(mag) {
+        var color = getColorBasedOnMagnitude(mag, isColorBlindMode);
+        legendDiv.innerHTML += `<i style="background:${color}; width: 18px; height: 18px; display: inline-block; margin-right: 5px;"></i> ${mag}<br>`;
+    });
 }
