@@ -1,42 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width">
-            <title></title>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title></title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.min.css">
-    <link rel="stylesheet" href="css/style.css">
-
-
+    <link rel="stylesheet" href="css/style.css"> <!-- Only CSS link here -->
+</head>
+<body style="background-color: rgb(220, 216, 254);"></bodystyle>>
         
-    </head>
-
-    <body>
-        <!--put your initial page content here-->
-        <!-- Container for Sidebar and Map -->
-        <div class="container">
-            <!-- Sidebar -->
-            <!-- Title -->
-            <h1>U.S. Tornado Geovisualization, 1950-2022</h1>
-            <div class="sidebar-container">
-
-                <!-- Controls -->
-                <div id="controls"></div>
-                    
-            </div>
-
-            <!-- Map Container -->
-            <div id="map"></div>
+        
+        
+    <div class="container">
+        <h1>U.S. Tornado Geovisualization, 1950-2022</h1>
+        <div class="sidebar-container">
+            <div id="controls"></div>
         </div>
-        <!--you can also use this space for internal scripts;
-        place these within <script> tags-->
-            
-            <!--put your external script links here-->
-        <script type="text/javascript" src="js/main.js"></script>
-        <script type="text/javascript" src="lib/jquery-3.5.1.js"></script>
-        <script type="text/javascript" src="lib/papaparse.js"></script>
-        <script type="text/javascript" src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-        <script type="text/javascript" src="https://unpkg.com/leaflet-search/dist/leaflet-search.src.js"></script>
-    </body>
+        <div id="map" style="height: 500px;"></div> 
+    </div>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="lib/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="lib/papaparse.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/leaflet-search/dist/leaflet-search.src.js"></script>
+</body>
 </html>

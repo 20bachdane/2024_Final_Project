@@ -16,16 +16,21 @@ function createMap() {
     // Define tile layers
     var worldLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-    }).addTo(map);
+    });
 
     var osmLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
     });
 
+    var darkMatterLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>',
+    }).addTo(map);
+
     // Add layer control to toggle between layers
     var baseLayers = {
         "World Imagery": worldLayer,
-        "OpenStreetMap": osmLayer
+        "OpenStreetMap": osmLayer,
+        "Dark Matter": darkMatterLayer
     };
 
     L.control.layers(baseLayers).addTo(map);
@@ -226,17 +231,17 @@ function clearMap() {
 }
 
 function createPolyline(dataRow, isColorBlindMode) {
-    if (dataRow.elat && dataRow.elon) {
+    var checkbox = document.querySelector(`.magnitude-checkbox[value="${dataRow.mag}"]`);
+    if (dataRow.elat && dataRow.elon && checkbox && checkbox.checked) {
         var latlngs = [
             [dataRow.slat, dataRow.slon],
             [dataRow.elat, dataRow.elon]
         ];
-
         var color = getColorBasedOnMagnitude(dataRow.mag, isColorBlindMode);
-
         var polyline = L.polyline(latlngs, {
             color: color,
-            weight: 3
+            weight: 3,
+            magnitude: dataRow.mag  // Store magnitude for filtering
         });
 
         var popupContent = `
@@ -269,16 +274,6 @@ function createPolyline(dataRow, isColorBlindMode) {
 function getColorBasedOnMagnitude(magnitude, isColorBlindMode) {
     if (isColorBlindMode) {
         switch (magnitude) {
-            case 0: return '#05509E'; // Dark Blue
-            case 1: return '#F2D734'; // Dark Yellow
-            case 2: return '#D5D5EA'; // Off White
-            case 3: return '#FFF5CC'; // Tan
-            case 4: return '#8E7F30'; // Dark Green
-            case 5: return '#6787C5'; // Light Blue
-            default: return 'gray';   // Gray for unexpected values
-        }
-    } else {
-        switch (magnitude) {
             case 0: return '#2F00FF'; // Bright Blue
             case 1: return '#17F939'; // Bright Green
             case 2: return '#28EEF9'; // Teal
@@ -287,7 +282,32 @@ function getColorBasedOnMagnitude(magnitude, isColorBlindMode) {
             case 5: return '#FF1EFC'; // Purple
             default: return 'gray';
         }
+    } else {
+        switch (magnitude) {
+            case 0: return '#2989ff'; // Dark Blue
+            case 1: return '#943dff'; // Dark Purple
+            case 2: return '#c30909'; // Red
+            case 3: return '#f06800'; // Orange
+            case 4: return '#f5ea14'; // Yellow
+            case 5: return '#ffffff'; // White
+            default: return 'gray';   // Gray for unexpected values
+        }
     }
+}
+
+function filterMapDisplay() {
+    var checkedMagnitudes = Array.from(document.querySelectorAll('.magnitude-checkbox:checked')).map(input => Number(input.value));
+    allPolylines.forEach(polyline => {
+        if (checkedMagnitudes.includes(polyline.options.magnitude)) {
+            if (!map.hasLayer(polyline)) {
+                map.addLayer(polyline);
+            }
+        } else {
+            if (map.hasLayer(polyline)) {
+                map.removeLayer(polyline);
+            }
+        }
+    });
 }
 
 function updateLegend(legendDiv, isColorBlindMode) {
@@ -295,6 +315,17 @@ function updateLegend(legendDiv, isColorBlindMode) {
     var magnitudes = [0, 1, 2, 3, 4, 5];
     magnitudes.forEach(function(mag) {
         var color = getColorBasedOnMagnitude(mag, isColorBlindMode);
-        legendDiv.innerHTML += `<i style="background:${color}; width: 18px; height: 18px; display: inline-block; margin-right: 5px;"></i> ${mag}<br>`;
+        legendDiv.innerHTML += `<label><input type="checkbox" class="magnitude-checkbox" value="${mag}" checked style="margin-right: 5px;">` +
+            `<i style="background:${color}; width: 18px; height: 18px; border: 2px solid black; display: inline-block;"></i> ${mag}</label><br>`;
+    });
+
+    // Add event listeners to checkboxes to filter map display
+    var checkboxes = legendDiv.querySelectorAll('.magnitude-checkbox');
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            filterMapDisplay();
+        });
     });
 }
+
+
