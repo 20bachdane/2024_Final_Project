@@ -312,10 +312,10 @@ function filterMapDisplay() {
 
 function updateLegend(legendDiv, isColorBlindMode) {
     legendDiv.innerHTML = '<h4>Magnitude</h4>';
-    var magnitudes = [0, 1, 2, 3, 4, 5];
+    var magnitudes = [5, 4, 3, 2, 1, 0];
     magnitudes.forEach(function(mag) {
         var color = getColorBasedOnMagnitude(mag, isColorBlindMode);
-        legendDiv.innerHTML += `<label><input type="checkbox" class="magnitude-checkbox" value="${mag}" checked style="margin-right: 5px;">` +
+        legendDiv.innerHTML += `<label><input type="checkbox" class="magnitude-checkbox" value="${mag}" checked style="margin-right: 10px;">` +
             `<i style="background:${color}; width: 18px; height: 18px; border: 2px solid black; display: inline-block;"></i> ${mag}</label><br>`;
     });
 

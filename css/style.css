@@ -27,5 +27,8 @@ h1 {
 }
 
 .filter-container {
-    margin-bottom: 20px; /* Add space between filter containers */
+    margin-bottom: -30px; /* Add space between filter containers */
+    margin-top: 90px; /* Adjust this value to move the filters down */
+    width: 90%;
+
 }
