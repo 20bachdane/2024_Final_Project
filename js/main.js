@@ -52,7 +52,7 @@ function createMap() {
     // Create and add legend to the controlDiv
     var legendDiv = document.createElement('div');
     legendDiv.id = 'legend';
-    legendDiv.style.marginTop = '10px'; // Add some spacing above the legend
+    legendDiv.style.marginTop = '20px'; // Add some spacing above the legend
     updateLegend(legendDiv, false); // Initialize with default legend
     controlDiv.appendChild(legendDiv);
 
@@ -274,12 +274,12 @@ function createPolyline(dataRow, isColorBlindMode) {
 function getColorBasedOnMagnitude(magnitude, isColorBlindMode) {
     if (isColorBlindMode) {
         switch (magnitude) {
-            case 0: return '#2F00FF'; // Bright Blue
-            case 1: return '#17F939'; // Bright Green
-            case 2: return '#28EEF9'; // Teal
-            case 3: return '#F2FF00'; // Yellow
-            case 4: return '#FF0000'; // Red
-            case 5: return '#FF1EFC'; // Purple
+            case 0: return '#607DBE'; // Bright Blue
+            case 1: return '#3668B2'; // Bright Green
+            case 2: return '#7E733A'; // Teal
+            case 3: return '#C9B32D'; // Yellow
+            case 4: return '#FFF1BB'; // Red
+            case 5: return '#FFFFFF'; // Purple
             default: return 'gray';
         }
     } else {
